@@ -79,6 +79,10 @@ def normalize_github_url(url: str) -> str | None:
         return None
     return f"https://github.com/{owner}/{repo}"
 
+def is_valid_github_url(url: str) -> bool:
+    """Check whether a URL points to a valid-looking GitHub repository."""
+    return normalize_github_url(url) is not None
+
 
 def fetch_arxiv_metadata(arxiv_id: str) -> dict[str, Any]:
     """Fetch title, authors, abstract, and submitted date from the arXiv API."""
