@@ -135,8 +135,8 @@
     "datasets": [
       "SWE-bench-Verified"
     ],
-    "sota_claims": 
-[
+    
+"sota_claims": [
   {
     "benchmark": "SWE-bench-Verified",
     "metric": "Relative improvement",
@@ -149,9 +149,8 @@
     "value": "76.0%",
     "comparison_target": "PhoenixRepair using MiniMax-M2.5; highest reported resolved rate"
   }
-]
+],
 
-    ],
     "abstract": "PhoenixRepair is a multi-agent framework that systematically explores multiple candidate edit locations and iteratively reflects on and refines patch generation. Experiments on SWE-bench-Verified report a 7.8% relative improvement over SWE-agent under DeepSeek-V3.1 and a 76.0% Pass@1 resolved rate under MiniMax-M2.5."
   },
   {
