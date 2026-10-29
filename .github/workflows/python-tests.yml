@@ -1,5 +1,5 @@
 
-name: Python Tests
+name: Python Tests and Paper Extraction
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
+  test-and-extract:
     runs-on: ubuntu-latest
 
     steps:
@@ -24,5 +24,18 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run tests
+      - name: Run unit tests
         run: python -m pytest -v
+
+      - name: Run paper extraction
+        run: python extract_paper_meta.py
+
+      - name: Validate five paper records
+        run: |
+          python -c "import json; from pathlib import Path; p=Path('extracted_papers.json'); data=json.loads(p.read_text(encoding='utf-8')); expected={'2503.18382','2510.13998','2607.18859','2507.23370','2503.11651'}; actual={r.get('arxiv_id') for r in data}; assert len(data)==5, f'Expected 5 records, got {len(data)}'; assert actual==expected, f'Unexpected paper IDs: {actual}'; print('PASS: all five paper records are present and JSON is valid.')"
+
+      - name: Upload extracted JSON
+        uses: actions/upload-artifact@v4
+        with:
+          name: extracted-paper-metadata
+          path: extracted_papers.json
